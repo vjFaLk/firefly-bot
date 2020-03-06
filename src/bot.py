@@ -104,7 +104,7 @@ def main():
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
-    bot_persistence = PicklePersistence(filename='../data/bot-data')
+    bot_persistence = PicklePersistence(filename='/app/data/bot-data')
     bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
     updater = Updater(bot_token,
                       persistence=bot_persistence, use_context=True)
