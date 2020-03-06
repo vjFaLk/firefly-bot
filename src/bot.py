@@ -75,7 +75,11 @@ def spend(update, context):
     firefly = get_firefly(context)
     account = context.user_data["firefly_default_account"]
     firefly.create_transaction(amount, description, account, category, budget)
-    
+
+def about(update, context):
+    firefly = get_firefly(context)
+    about = firefly.get_about_user()
+    update.message.reply_text("```{}```".format(about))
 
 def get_firefly(context):
     return Firefly(hostname=context.user_data.get("firefly_url"), auth_token=context.user_data.get("firefly_token"))
@@ -120,6 +124,7 @@ def main():
     )
 
     updater.dispatcher.add_handler(CommandHandler('help', help))
+    updater.dispatcher.add_handler(CommandHandler('about', about))
     updater.dispatcher.add_handler(MessageHandler(filters=Filters.regex("^[0-9]+"), callback=spend))
     updater.dispatcher.add_error_handler(error)
     updater.dispatcher.add_handler(conversation_handler)
