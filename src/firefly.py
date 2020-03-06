@@ -9,7 +9,7 @@ class Firefly(object):
     def _post(self, endpoint, payload):
         response = requests.post("{}{}".format(self.hostname, endpoint), json=payload, headers=self.headers)
 
-    def _get(self, endpoint, params):
+    def _get(self, endpoint, params=None):
         response = requests.get("{}{}".format(self.hostname, endpoint), params=params, headers=self.headers)
         return response.json()
 
