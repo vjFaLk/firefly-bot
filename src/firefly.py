@@ -7,7 +7,6 @@ class Firefly(object):
         self.hostname = hostname + "/api/v1/"
     
     def _post(self, endpoint, payload):
-        print(payload)
         response = requests.post("{}{}".format(self.hostname, endpoint), json=payload, headers=self.headers)
 
     def _get(self, endpoint, params):
