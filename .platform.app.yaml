@@ -9,6 +9,7 @@ name: app
 # The runtime the application uses.
 type: "python:3.8"
 
+
 # The hooks executed at various points in the lifecycle of the application.
 hooks:
     build: |
@@ -17,6 +18,11 @@ hooks:
 
 # The size of the persistent disk of the application (in MB).
 disk: 1024
+
+mounts:
+    'data':
+        source: local
+        source_path: data
 # The configuration of app when it is exposed to the web.
 web:
     commands:
