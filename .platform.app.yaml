@@ -13,11 +13,11 @@ type: "python:3.8"
 hooks:
     build: |
         pip install -r requirements.txt
-      
+        mkdir data
 
 # The size of the persistent disk of the application (in MB).
 disk: 1024
 # The configuration of app when it is exposed to the web.
 web:
     commands:
-        start: python bot.py
+        start: python ./src/bot.py
