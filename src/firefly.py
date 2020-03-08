@@ -7,7 +7,7 @@ class Firefly(object):
         self.hostname = hostname + "/api/v1/"
     
     def _post(self, endpoint, payload):
-        response = requests.post("{}{}".format(self.hostname, endpoint), json=payload, headers=self.headers)
+        return requests.post("{}{}".format(self.hostname, endpoint), json=payload, headers=self.headers)
 
     def _get(self, endpoint, params=None):
         response = requests.get("{}{}".format(self.hostname, endpoint), params=params, headers=self.headers)
@@ -31,6 +31,7 @@ class Firefly(object):
                 "date": now.strftime("%Y-%m-%d"),
                 "amount": amount,
                 "source_id": account,
+                "destination_name": description,
                 "budget_name": budget,
                 "category_name": category,
             }]

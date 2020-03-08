@@ -55,7 +55,6 @@ def get_default_account(update, context):
 def store_default_account(update, context):
     query = update.callback_query
     default_account_id = query.data
-    print(default_account_id)
     context.user_data['firefly_default_account'] = default_account_id
     query.edit_message_text('Setup Complete. Happy Spending!(?)')
     return ConversationHandler.END
@@ -74,7 +73,15 @@ def spend(update, context):
     
     firefly = get_firefly(context)
     account = context.user_data["firefly_default_account"]
-    firefly.create_transaction(amount, description, account, category, budget)
+    response = firefly.create_transaction(amount, description, account, category, budget)
+    if response.status_code == 422:
+        update.message.reply_text(response.get("message"))
+    elif response.status_code == 200:
+        update.message.reply_text("Transaction made successfully")
+    else:
+        update.message.reply_text("Something went wrong, check logs")
+
+
 
 def about(update, context):
     firefly = get_firefly(context)
