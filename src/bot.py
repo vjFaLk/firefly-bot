@@ -113,8 +113,10 @@ def error(update, context):
 
 
 def main():
-    data_dir = Path.joinpath(Path.home(), ".config", "firefly-bot")
-    data_dir.mkdir(parents=True, exist_ok=True)
+    data_dir = Path(os.getenv("CONFIG_PATH"))
+    if not data_dir:
+        data_dir = Path.joinpath(Path.home(), ".config", "firefly-bot")
+        data_dir.mkdir(parents=True, exist_ok=True)
     bot_persistence = PicklePersistence(filename=str(data_dir/"bot-data"))
     bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
     updater = Updater(bot_token,

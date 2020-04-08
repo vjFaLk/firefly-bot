@@ -8,6 +8,14 @@ First you'll have to generate a Telegram Bot token through [BotFather](https://t
 
 ### Docker (Recommended)
 
+```bash
+docker create \
+  --name=firefly-bot \ 
+  -e TELEGRAM_BOT_TOKEN=<your-bot-token> \
+  -v </path/to/config>:/config \
+  vjfalk1/firefly-telegram-bot
+```
+
 ### Local
 You'll need python 3.8 and pip installed
 
