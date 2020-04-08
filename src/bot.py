@@ -6,14 +6,15 @@
 Basic example for a bot that uses inline keyboards.
 """
 import logging
-
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
-from telegram.ext import (Updater, CommandHandler, MessageHandler,
-                          CallbackQueryHandler, PicklePersistence,
-                          ConversationHandler, Filters)
+import os
+from pathlib import Path
 
 from firefly import Firefly
-import os
+from telegram import (InlineKeyboardButton, InlineKeyboardMarkup,
+                      ReplyKeyboardRemove)
+from telegram.ext import (CallbackQueryHandler, CommandHandler,
+                          ConversationHandler, Filters, MessageHandler,
+                          PicklePersistence, Updater)
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -94,7 +95,7 @@ def get_firefly(context):
 
 def help(update, context):
     if not context.user_data.get('firefly_default_account'):
-        update.message.reply_text("Use /start to test this bot.")
+        update.message.reply_text("Type /start to initiate the setup process.")
     else:
         update.message.reply_text("""Just type in an expense with a description. \Like this - 
         \n '5 Starbucks' \n Additionally you can also include the category and budget (both optional)
@@ -112,10 +113,9 @@ def error(update, context):
 
 
 def main():
-    # Create the Updater and pass it your bot's token.
-    # Make sure to set use_context=True to use the new context based callbacks
-    # Post version 12 this will no longer be necessary
-    bot_persistence = PicklePersistence(filename='/app/data/bot-data')
+    data_dir = Path.joinpath(Path.home(), ".config", "firefly-bot")
+    data_dir.mkdir(parents=True, exist_ok=True)
+    bot_persistence = PicklePersistence(filename=str(data_dir/"bot-data"))
     bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
     updater = Updater(bot_token,
                       persistence=bot_persistence, use_context=True)
