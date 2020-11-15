@@ -46,7 +46,7 @@ Only the first two values are needed. The rest are optional. The description val
 
 A simple one - 
 
-```5 Starbucks```
+```5, Starbucks```
 
 One with all the fields being used -
 
