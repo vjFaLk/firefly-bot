@@ -137,3 +137,4 @@ dmypy.json
 # Repo Specific
 data/
 .vscode/
+bot-data
