@@ -32,7 +32,6 @@ class Firefly(object):
                 "description": description,
                 "date": now.strftime("%Y-%m-%d"),
                 "amount": amount,
-                "destination_name": destination_account or description,
                 "budget_name": budget,
                 "category_name": category,
             }]
@@ -41,5 +40,13 @@ class Firefly(object):
             payload["transactions"][0]["source_id"] = source_account
         else:
             payload["transactions"][0]["source_name"] = source_account
+
+        if destination_account:
+            if destination_account.isnumeric():
+                payload["transactions"][0]["destination_id"] = destination_account
+            else:
+                payload["transactions"][0]["destination_name"] = destination_account
+        else:
+            payload["transactions"][0]["destination_name"] = description
 
         return self._post(endpoint="transactions", payload=payload)
