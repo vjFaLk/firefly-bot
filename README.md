@@ -56,6 +56,10 @@ You can skip specfic fields by leaving them empty (except the first two) -
 
 ```5, Starbucks, , Food Budget, UCO Bank```
 
+You can also specify accounts by using their id instead of their name - 
+
+```5, Mocha with an extra shot for Steve, Coffee, Food Budget, 5, 35```
+
 ---
 
 ## Development
