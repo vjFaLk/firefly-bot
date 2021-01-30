@@ -29,8 +29,8 @@ def start(update, context):
 
 
 def get_firefly_token(update, context):
-    firefly_url = update.message.text
-    context.user_data["firefly_url"] = firefly_url
+    firefly_url = update.message.text.rstrip("//") # Remove trailing slash if exists
+    context.user_data["firefly_url"] = firefly_url 
     update.message.reply_text("""
     Please enter your Firefly III User Token
     \nYou can generate it from the OAuth section here - {}/profile""".format(firefly_url))
