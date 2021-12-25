@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: firefly-telegram-bot
+  labels:
+    app: firefly-iii
+    tier: telegram-bot
+spec:
+  selector:
+    matchLabels:
+      app: firefly-iii
+      tier: telegram-bot
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: firefly-iii
+        tier: telegram-bot
+    spec:
+      containers:
+        - name: firefly-telegram-bot
+          image: vjfalk1/firefly-telegram-bot
+          resources:
+            limits:
+              memory: "100Mi"
+              cpu: "50m"
+          env:
+            - name: TELEGRAM_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: firefly-telegram
+                  key: TELEGRAM_BOT_TOKEN
+          volumeMounts:
+            - name: firefly-config
+              mountPath: /config
+      volumes:
+        - name: firefly-config
+          persistentVolumeClaim:
+            claimName: firefly-telegram
