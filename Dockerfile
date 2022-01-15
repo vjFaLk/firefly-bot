@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8-slim-buster
 
 WORKDIR /app
 ENV CONFIG_PATH=/config
