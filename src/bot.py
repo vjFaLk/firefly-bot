@@ -164,7 +164,13 @@ def main():
     else:
         data_dir = Path(data_dir)
     bot_persistence = PicklePersistence(filename=str(data_dir/"bot-data"))
-    bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
+    bot_token_file_path = os.getenv("TELEGRAM_BOT_TOKEN_FILE")
+    if bot_token_file_path:
+        with open(bot_token_file_path, 'r') as f:
+            bot_token = f.readline().split()[0]
+    else:
+        bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
+
     updater = Updater(bot_token,
                       persistence=bot_persistence, use_context=True)
 
